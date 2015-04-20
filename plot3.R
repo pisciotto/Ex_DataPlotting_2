@@ -4,6 +4,10 @@
 
 ## First of all, we make sure we have the downloaded data available, we will
 ## put it in a file in the local working directory
+
+##Load ggplot2 library
+require(ggplot2)
+
 filename = "exdata_plotting2.zip"
 if (!file.exists(filename)) {
   retval = download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2FNEI_data.zip",
