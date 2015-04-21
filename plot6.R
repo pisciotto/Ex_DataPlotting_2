@@ -27,9 +27,9 @@ Baltimore_onroad <- subset(NEI, fips == '24510' & type == 'ON-ROAD')
 LA_onroad <- subset(NEI, fips == '06037' & type == 'ON-ROAD')
 
 # Aggregate
-Baltimre_DF <- aggregate(Baltimore_onroad[, 'Emissions'], by=list(Baltimore_onroad$year), sum)
-colnames(Baltimre_DF) <- c('year', 'Emissions')
-Baltimre_DF$City <- paste(rep('MD', 4))
+Baltimore_DF <- aggregate(Baltimore_onroad[, 'Emissions'], by=list(Baltimore_onroad$year), sum)
+colnames(Baltimore_DF) <- c('year', 'Emissions')
+Baltimore_DF$City <- paste(rep('MD', 4))
 
 LA_DF <- aggregate(LA_onroad[, 'Emissions'], by=list(LA_onroad$year), sum)
 colnames(LA_DF) <- c('year', 'Emissions')
@@ -44,8 +44,11 @@ DF <- as.data.frame(rbind(Baltimore_DF, LA_DF))
 # Generate the graph in the same directory as the source code
 png('~/ass2_plot6.png')
 
-ggplot(data=DF, aes(x=year, y=Emissions)) + geom_bar(aes(fill=year)) + guides(fill=F) + 
-    ggtitle('Total Emissions of Motor Vehicle Sources\nLos Angeles County, California vs. Baltimore City, Maryland') + 
-    ylab(expression('PM'[2.5])) + xlab('Year') + theme(legend.position='none') + facet_grid(. ~ City) + 
-    geom_text(aes(label=round(Emissions,0), size=1, hjust=0.5, vjust=-1))
+ggplot(data=DF, aes(x=year, y=Emissions)) +
+  geom_point()+ 
+  ggtitle('Total Emissions of Motor Vehicle Sources\nLos Angeles County, California vs. Baltimore City, Maryland') + 
+  ylab(expression('PM'[2.5])) +
+  xlab('Year') + 
+  theme(legend.position='none') + 
+  facet_grid(. ~ City)  
 dev.off()
